@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import useChatStore from "../store/ChatStore";
 
 const API_URL = "http://localhost:3000/auth";
 
@@ -21,6 +22,8 @@ const register = async (firstName, lastName, username, email, password) => {
   }
 };
 
+// const { user, setUser } = useChatStore();
+
 const login = async (username, password) => {
   try {
     const data = {
@@ -31,6 +34,7 @@ const login = async (username, password) => {
     const decodedToken = jwtDecode(response.data.token);
     const expirationTime = new Date(decodedToken.exp * 1000);
     document.cookie = `jwt=${response.data.token}; path=/; expires=${expirationTime}; secure; SameSite=strict`;
+    //setUser({ username });
     return response.data.token;
   } catch (error) {
     throw error;
