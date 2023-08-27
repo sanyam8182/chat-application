@@ -1,37 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { connectToRoom, sendMessage } from '../services/socketService';
+import React, { useEffect, useState } from "react";
+import { connectToRoom, sendMessage } from "../services/socketService";
+import useChatStore from "../store/ChatStore";
 
 const ChatRoom = () => {
-  const { roomId } = useParams();
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const roomId = useChatStore((state) => state.currentRoom);
+
+  const { messages, setMessages } = useChatStore();
+
+  console.log(messages);
 
   useEffect(() => {
     connectToRoom(roomId);
   }, [roomId]);
 
-  const handleSendMessage = () => {
-    if (message.trim() !== '') {
-      sendMessage(roomId, message);
-      setMessage('');
-    }
+  const handleSendMessage = (e) => {
+    // if (message.trim() !== "") {
+    //   sendMessage(roomId, message);
+    //   setMessage("");
+    // }
+    setMessages([
+      {
+        username: "1", // Use the current user's username
+        message: "hello",
+      },
+    ]);
+    console.log(messages);
   };
 
   return (
-    <div>
-      <h2>Chat Room {roomId}</h2>
+    <div className=" h-screen flex ">
       <div>
-        {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))}
+        {/* {messages.map((msg, index) => (
+          <div key={index} className=" flex ">
+            {msg}
+          </div>
+        ))} */}
       </div>
       <div>
         <input
           type="text"
           placeholder="Type your message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          value={messages}
+          onChange={(e) => setMessages(e.target.value)}
         />
         <button onClick={handleSendMessage}>Send</button>
       </div>
