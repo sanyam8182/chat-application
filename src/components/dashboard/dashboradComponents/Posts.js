@@ -2,7 +2,7 @@ import React from "react";
 
 export const Posts = () => {
   return (
-    <div className="w-[70%]  ">
+    <div className="w-[70%] h-full  ">
       <div className=" flex shadow-md p-4 ">
         <div className="h-[64px] min-w-[64px]">
           <img

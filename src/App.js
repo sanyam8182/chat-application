@@ -8,7 +8,7 @@ import ChatRoom from "./components/ChatRoom.js";
 
 const App = () => {
   return (
-    <div className=" h-screen overflow-hidden ">
+    <div className=" h-screen ">
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
