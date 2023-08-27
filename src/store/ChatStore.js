@@ -35,6 +35,7 @@ const useChatStore = create((set) => ({
   },
   onlineUsers: [],
   chatroomOpen: false,
+  otherUsers: [],
 
   setUser: (payload) => set({ user: payload }),
   setChatRooms: (payload) => set({ chatRooms: payload }),
@@ -42,7 +43,8 @@ const useChatStore = create((set) => ({
   setMessages: (payload) => set({ messages: payload }),
   setNewMessage: (payload) => set({ newMessage: payload }),
   setOnlineUsers: (payload) => set({ onlineUsers: payload }),
-  setChatroomOpen: (payload) => set({ chatroomOpen: payload })
+  setChatroomOpen: (payload) => set({ chatroomOpen: payload }),
+  setOtherUsers: (payload) => set({ otherUsers: payload }),
 }));
 
 export default useChatStore;

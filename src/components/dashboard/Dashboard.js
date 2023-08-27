@@ -1,17 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Posts } from "./dashboradComponents/Posts";
 import { Chat } from "./dashboradComponents/Chat";
 import { Contacts } from "./dashboradComponents/Contacts";
 import useChatStore from "../../store/ChatStore";
+import { getCookie } from "../../services/authService";
+import jwtDecode from "jwt-decode";
+import { getUser, getUsers } from "../../services/userService";
 
 export const Dashboard = () => {
   const { chatroomOpen, setChatroomOpen } = useChatStore();
+  const { user, setUser } = useChatStore();
+  const {otherUsers, setOtherUsers} = useChatStore()
 
+  const validateUser = () => {
+    if (!user.username) {
+      const token = getCookie("jwt");
+      console.log(token);
+      if (token) {
+        try {
+          // Decode the JWT token
+          const decodedToken = jwtDecode(token);
 
-  const handleDrawer = () => {
-    console.log(chatroomOpen)
-    setChatroomOpen(!chatroomOpen)
-  }
+          // Check token expiration
+          const currentTime = Math.floor(Date.now() / 1000);
+          if (decodedToken.exp < currentTime) {
+            console.log("JWT token has expired.");
+          } else {
+            console.log("Valid JWT token");
+            getUserData(decodedToken.username);
+          }
+        } catch (error) {
+          console.log("Error decoding JWT token:", error.message);
+        }
+      } else {
+        console.log("JWT token not found in the cookie.");
+      }
+    } else {
+      const users = getUsers(user.username);
+    }
+  };
+
+  const getUserData = async (username) => {
+    const userData = await getUser(username);
+    setUser(userData.user);
+    const users = await getUsers(userData.user.username);
+    console.log("usersDashboard", users )
+    setOtherUsers(users)
+  };
+
+  useEffect(() => {
+    console.log(!user.username);
+    validateUser();
+  }, []);
 
   return (
     <div className=" min-h-screen bg-[#fafafa] ">
@@ -35,7 +75,7 @@ export const Dashboard = () => {
       {chatroomOpen && (
         <div
           className="h-[100vh] w-[100vw] bg-[#00000094] fixed top-0 left-0 z-40"
-          onClick={ () => setChatroomOpen(!chatroomOpen)}
+          onClick={() => setChatroomOpen(!chatroomOpen)}
         >
           overlay
         </div>
