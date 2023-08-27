@@ -4,6 +4,7 @@ import userImage from "../../assets/user.svg";
 import arrow from "../../assets/arrow.svg";
 import { useNavigate } from "react-router-dom";
 import { StaticLogo } from "./StaticLogo";
+import jwtDecode from "jwt-decode";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,11 +14,22 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = getCookie("jwt");
+    const decodedToken = jwtDecode(token);
+    console.log(token);
+  });
+  const getCookie = (name) => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split("; ");
 
-    const token = document.cookie.
-
-  })
-
+    for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split("=");
+      if (cookieName === name) {
+        return decodeURIComponent(cookieValue);
+      }
+    }
+    return null;
+  };
   const handleLogin = async () => {
     try {
       if (!username || !password) {

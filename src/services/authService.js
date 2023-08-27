@@ -14,10 +14,8 @@ const register = async (firstName, lastName, username, email, password) => {
 
   try {
     await axios.post(`${API_URL}/register`, data);
-    const token = login(username, password);
-    const decodedToken = jwtDecode(token);
-    const expirationTime = new Date(decodedToken.exp * 1000);
-    document.cookie = `jwt=${token}; path=/; expires=${expirationTime}; secure; SameSite=strict`;
+    await login(username, password);
+    console.log(document.cookie);
   } catch (error) {
     throw error;
   }
@@ -30,6 +28,9 @@ const login = async (username, password) => {
       password: password,
     };
     const response = await axios.post(`${API_URL}/login`, data);
+    const decodedToken = jwtDecode(response.data.token);
+    const expirationTime = new Date(decodedToken.exp * 1000);
+    document.cookie = `jwt=${response.data.token}; path=/; expires=${expirationTime}; secure; SameSite=strict`;
     return response.data.token;
   } catch (error) {
     throw error;
