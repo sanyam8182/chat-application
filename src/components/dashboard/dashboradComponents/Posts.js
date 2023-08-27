@@ -1,8 +1,14 @@
 import React from "react";
+import useChatStore from "../../../store/ChatStore";
 
 export const Posts = () => {
+  const { chatroomOpen, setChatroomOpen } = useChatStore();
   return (
-    <div className="w-[70%] h-full  ">
+    <div
+      className={`h-full  transition duration-700 ${
+        chatroomOpen ? "w-[40%] " : "w-[70%]"
+      }`}
+    >
       <div className=" flex shadow-md p-4 ">
         <div className="h-[64px] min-w-[64px]">
           <img

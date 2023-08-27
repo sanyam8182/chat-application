@@ -34,6 +34,7 @@ const useChatStore = create((set) => ({
     created_at: "",
   },
   onlineUsers: [],
+  drawerOpen: false,
   chatroomOpen: false,
   otherUsers: [],
 
@@ -43,6 +44,7 @@ const useChatStore = create((set) => ({
   setMessages: (payload) => set({ messages: payload }),
   setNewMessage: (payload) => set({ newMessage: payload }),
   setOnlineUsers: (payload) => set({ onlineUsers: payload }),
+  setdrawerOpen: (payload) => set({ drawerOpen: payload }),
   setChatroomOpen: (payload) => set({ chatroomOpen: payload }),
   setOtherUsers: (payload) => set({ otherUsers: payload }),
 }));

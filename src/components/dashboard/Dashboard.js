@@ -8,9 +8,10 @@ import jwtDecode from "jwt-decode";
 import { getUser, getUsers } from "../../services/userService";
 
 export const Dashboard = () => {
-  const { chatroomOpen, setChatroomOpen } = useChatStore();
+  const { drawerOpen, setdrawerOpen } = useChatStore();
   const { user, setUser } = useChatStore();
-  const {otherUsers, setOtherUsers} = useChatStore()
+  const { otherUsers, setOtherUsers } = useChatStore();
+  const { chatroomOpen, setChatroomOpen } = useChatStore();
 
   const validateUser = () => {
     if (!user.username) {
@@ -44,8 +45,8 @@ export const Dashboard = () => {
     const userData = await getUser(username);
     setUser(userData.user);
     const users = await getUsers(userData.user.username);
-    console.log("usersDashboard", users )
-    setOtherUsers(users)
+    console.log("usersDashboard", users);
+    setOtherUsers(users);
   };
 
   useEffect(() => {
@@ -63,19 +64,19 @@ export const Dashboard = () => {
       <div className="flex   p-6 gap-6 ">
         <Posts />
         <Contacts />
-        {/* <Chat /> */}
+        {chatroomOpen && <Chat />}
       </div>
       <div
         className={`bg-red-400 fixed right-0 top-0 h-[100vh] w-[500px] origin-left transition duration-700 z-50 ${
-          chatroomOpen ? "-translate-x-[0%]" : "translate-x-[100%] "
+          drawerOpen ? "-translate-x-[0%]" : "translate-x-[100%] "
         } `}
       >
         drawer
       </div>
-      {chatroomOpen && (
+      {drawerOpen && (
         <div
           className="h-[100vh] w-[100vw] bg-[#00000094] fixed top-0 left-0 z-40"
-          onClick={() => setChatroomOpen(!chatroomOpen)}
+          onClick={() => setdrawerOpen(!drawerOpen)}
         >
           overlay
         </div>
