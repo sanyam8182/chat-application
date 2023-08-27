@@ -15,8 +15,27 @@ const Login = () => {
 
   useEffect(() => {
     const token = getCookie("jwt");
-    const decodedToken = jwtDecode(token);
-    console.log(token);
+
+    if (token) {
+      try {
+        // Decode the JWT token
+        const decodedToken = jwtDecode(token);
+
+        // Check token expiration
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decodedToken.exp < currentTime) {
+          console.log("JWT token has expired.");
+        } else {
+          console.log("JWT token is valid.");
+          console.log("Decoded Token:", decodedToken);
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log("Error decoding JWT token:", error.message);
+      }
+    } else {
+      console.log("JWT token not found in the cookie.");
+    }
   });
   const getCookie = (name) => {
     const cookieString = document.cookie;
