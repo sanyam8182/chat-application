@@ -1,6 +1,5 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import useChatStore from "../store/ChatStore";
 
 const API_URL = "http://localhost:3000/auth";
 
@@ -31,14 +30,27 @@ const login = async (username, password) => {
       password: password,
     };
     const response = await axios.post(`${API_URL}/login`, data);
+    console.log("userdata: ", response);
     const decodedToken = jwtDecode(response.data.token);
     const expirationTime = new Date(decodedToken.exp * 1000);
     document.cookie = `jwt=${response.data.token}; path=/; expires=${expirationTime}; secure; SameSite=strict`;
-    //setUser({ username });
     return response.data.token;
   } catch (error) {
     throw error;
   }
 };
 
-export { register, login };
+const getCookie = (name) => {
+  const cookieString = document.cookie;
+  const cookies = cookieString.split("; ");
+
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      return decodeURIComponent(cookieValue);
+    }
+  }
+  return null;
+};
+
+export { register, login, getCookie };

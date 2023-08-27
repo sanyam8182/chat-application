@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { login } from "../../services/authService";
+import { login, getCookie } from "../../services/authService";
 import userImage from "../../assets/user.svg";
 import arrow from "../../assets/arrow.svg";
 import { useNavigate } from "react-router-dom";
 import { StaticLogo } from "./StaticLogo";
 import jwtDecode from "jwt-decode";
+import useChatStore from "../../store/ChatStore";
+import { getUser } from "../../services/userService";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -12,6 +14,7 @@ const Login = () => {
   const [loginCheck, setloginCheck] = useState(true);
   const [keepSignedIn, setkeepSignedIn] = useState(false);
   const navigate = useNavigate();
+  const { user, setUser } = useChatStore();
 
   useEffect(() => {
     const token = getCookie("jwt");
@@ -26,9 +29,7 @@ const Login = () => {
         if (decodedToken.exp < currentTime) {
           console.log("JWT token has expired.");
         } else {
-          console.log("JWT token is valid.");
-          console.log("Decoded Token:", decodedToken);
-          navigate("/dashboard");
+          getUserData(decodedToken.username);
         }
       } catch (error) {
         console.log("Error decoding JWT token:", error.message);
@@ -36,19 +37,14 @@ const Login = () => {
     } else {
       console.log("JWT token not found in the cookie.");
     }
-  });
-  const getCookie = (name) => {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split("; ");
+  }, []);
 
-    for (const cookie of cookies) {
-      const [cookieName, cookieValue] = cookie.split("=");
-      if (cookieName === name) {
-        return decodeURIComponent(cookieValue);
-      }
-    }
-    return null;
+  const getUserData = async (username) => {
+    const userData = await getUser(username);
+    setUser(userData.user);
+    navigate("/dashboard");
   };
+
   const handleLogin = async () => {
     try {
       if (!username || !password) {
@@ -58,8 +54,10 @@ const Login = () => {
       setloginCheck(true);
       const token = await login(username, password);
       // Handle success, maybe store the token and redirect
+      const user = await getUser(username);
+      setUser(user);
+
       navigate("/dashboard");
-      console.log(`Received login token ${token}`);
     } catch (error) {
       // Handle error, show an error message
       console.log(`Error while login ${error}`);

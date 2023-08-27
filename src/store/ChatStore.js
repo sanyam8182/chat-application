@@ -1,15 +1,38 @@
 import { create } from "zustand";
 
 const useChatStore = create((set) => ({
-  user: null,
-  chatRooms: [],
-  currentRoom: null,
-  messages: [
+  user: {
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+  },
+  chatRooms: [
     {
-      username: "sayam", // Use the current user's username
-      message: "hello",
+      roomid: "",
+      username1: "",
+      username2: "",
     },
   ],
+  currentRoom: {
+    roomId: "1",
+    username1: "",
+    username2: "",
+  },
+  messages: [
+    {
+      name: "Sayam Koul",
+      usename: "sayam",
+      message: "Hello!",
+      created_at: "27 Aug 2023, 8:18 PM",
+    },
+  ],
+  newMessage: {
+    name: "",
+    usename: "",
+    message: "",
+    created_at: "",
+  },
   onlineUsers: [],
   chatroomOpen: false,
 
@@ -17,6 +40,7 @@ const useChatStore = create((set) => ({
   setChatRooms: (payload) => set({ chatRooms: payload }),
   setCurrentRoom: (payload) => set({ currentRoom: payload }),
   setMessages: (payload) => set({ messages: payload }),
+  setNewMessage: (payload) => set({ newMessage: payload }),
   setOnlineUsers: (payload) => set({ onlineUsers: payload }),
   setChatroomOpen: (payload) => set({ chatroomOpen: payload })
 }));
