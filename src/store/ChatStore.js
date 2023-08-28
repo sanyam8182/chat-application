@@ -7,29 +7,18 @@ const useChatStore = create((set) => ({
     username: "",
     email: "",
   },
-  chatRooms: [
-    {
-      roomid: "",
-      username1: "",
-      username2: "",
-    },
-  ],
+  chatRooms: [],
   currentRoom: {
-    roomId: "1",
-    username1: "",
-    username2: "",
+    id: "",
+    room_id: "1",
+    users: [],
+    created_at: "",
+    is_private: true,
   },
-  messages: [
-    {
-      name: "Sayam Koul",
-      usename: "sayam",
-      message: "Hello!",
-      created_at: "27 Aug 2023, 8:18 PM",
-    },
-  ],
+  messages: [],
   newMessage: {
     name: "",
-    usename: "",
+    username: "",
     message: "",
     created_at: "",
   },

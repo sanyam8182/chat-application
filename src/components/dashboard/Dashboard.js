@@ -7,11 +7,18 @@ import { getCookie } from "../../services/authService";
 import jwtDecode from "jwt-decode";
 import { getUser, getUsers } from "../../services/userService";
 
+import {
+  getChatRoom,
+  getChatRooms,
+  createChatRoom,
+} from "../../services/chatService";
+
 export const Dashboard = () => {
   const { drawerOpen, setdrawerOpen } = useChatStore();
   const { user, setUser } = useChatStore();
   const { otherUsers, setOtherUsers } = useChatStore();
   const { chatroomOpen, setChatroomOpen } = useChatStore();
+  const { chatRooms, setChatRooms } = useChatStore();
 
   const validateUser = () => {
     if (!user.username) {
@@ -28,7 +35,13 @@ export const Dashboard = () => {
             console.log("JWT token has expired.");
           } else {
             console.log("Valid JWT token");
-            getUserData(decodedToken.username);
+            setUser({
+              firstname: "",
+              lastname: "",
+              username: decodedToken.username,
+              email: "",
+            });
+            getChatRoomsData(decodedToken.username);
           }
         } catch (error) {
           console.log("Error decoding JWT token:", error.message);
@@ -37,8 +50,18 @@ export const Dashboard = () => {
         console.log("JWT token not found in the cookie.");
       }
     } else {
-      const users = getUsers(user.username);
+      getChatRoomsData(user.username);
     }
+  };
+
+  const getChatRoomsData = async (username) => {
+    const chatRoomsData = await getChatRooms();
+    chatRoomsData.forEach((chatRoom) => {
+      if (chatRoom.users.includes(username) || chatRoom.is_private === false)
+        chatRooms.push(chatRoom);
+    });
+    setChatRooms(chatRooms);
+    await getUserData(username);
   };
 
   const getUserData = async (username) => {
@@ -47,6 +70,23 @@ export const Dashboard = () => {
     const users = await getUsers(userData.user.username);
     console.log("usersDashboard", users);
     setOtherUsers(users);
+    if (users.users) {
+      for (let i = 0; i < users.users.length; i++) {
+        const item = users.users[i].username;
+        const exists = chatRooms.some(
+          (chatRoom) =>
+            chatRoom.users.includes(item) && chatRoom.is_private === true
+        );
+        console.log("Check exists: ", exists, item);
+        if (!exists) {
+          const chatRoomUsers = [username, item];
+          const chatRoomData = await createChatRoom(chatRoomUsers, true, "");
+          console.log("chat room created: ", chatRoomData);
+          chatRooms.push(chatRoomData);
+          setChatRooms(chatRooms);
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -55,16 +95,32 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className=" min-h-screen bg-[#fafafa] ">
+    <div className=" h-full bg-[#fafafa]  ">
       <div className="bg-[#1B5DE0] h-[80px] flex items-center justify-between text-white ">
         <h1>Logo</h1>
         <h1>Search</h1>
         <h1>Account Box</h1>
       </div>
-      <div className="flex   p-6 gap-6 ">
+      <div className="flex p-6 gap-6 flex-grow ">
         <Posts />
-        <Contacts />
-        {chatroomOpen && <Chat />}
+        <div
+          className={`flex gap-0 flex-grow ${
+            chatroomOpen ? "w-[60%]" : "w-[30%]"
+          }`}
+        >
+          <div
+            className={` shadow-4px rounded-md ${
+              chatroomOpen ? "w-[50%]" : "w-[100%]"
+            }`}
+          >
+            <Contacts />
+          </div>
+          {chatroomOpen && (
+            <div className=" w-[50%] shadow-4px ">
+              <Chat />
+            </div>
+          )}
+        </div>
       </div>
       <div
         className={`bg-red-400 fixed right-0 top-0 h-[100vh] w-[500px] origin-left transition duration-700 z-50 ${
