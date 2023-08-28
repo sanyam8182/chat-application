@@ -6,17 +6,21 @@ import useChatStore from "../../store/ChatStore";
 import { getCookie } from "../../services/authService";
 import jwtDecode from "jwt-decode";
 import { getUser, getUsers } from "../../services/userService";
+import userTop from "../../assets/userTop.svg"
+import logo from "../../assets/G1614.svg"
+import search from "../../assets/search.svg"
 
 import {
   getChatRoom,
   getChatRooms,
   createChatRoom,
 } from "../../services/chatService";
+import { ChatroomDrawer } from "./dashboradComponents/ChatroomDrawer";
 
 export const Dashboard = () => {
   const { drawerOpen, setdrawerOpen } = useChatStore();
   const { user, setUser } = useChatStore();
-  const { otherUsers, setOtherUsers } = useChatStore();
+  var { otherUsers, setOtherUsers } = useChatStore();
   const { chatroomOpen, setChatroomOpen } = useChatStore();
   const { chatRooms, setChatRooms } = useChatStore();
 
@@ -68,8 +72,18 @@ export const Dashboard = () => {
     const userData = await getUser(username);
     setUser(userData.user);
     const users = await getUsers(userData.user.username);
-    console.log("usersDashboard", users);
-    setOtherUsers(users);
+    users.users.forEach((user) => {
+      const otheruserData = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
+        email: user.email,
+        is_checked: false,
+      };
+      otherUsers.push(otheruserData);
+    });
+    setOtherUsers(otherUsers);
+    console.log("usersDashboard", otherUsers);
     if (users.users) {
       for (let i = 0; i < users.users.length; i++) {
         const item = users.users[i].username;
@@ -96,10 +110,13 @@ export const Dashboard = () => {
 
   return (
     <div className=" h-full bg-[#fafafa]  ">
-      <div className="bg-[#1B5DE0] h-[80px] flex items-center justify-between text-white ">
-        <h1>Logo</h1>
-        <h1>Search</h1>
-        <h1>Account Box</h1>
+      <div className="bg-[#1B5DE0] h-[80px] flex items-center justify-between text-white px-6 ">
+        <img src={logo} className=" w-[28px] h-[28px] " ></img>
+        <div className=" bg-[#f5f5f5] w-96 h-[36px] p-4 rounded-md flex flex-row items-center ">
+          <img src={search} className=" w-[20px] h-[20px] "></img>
+          <input type="text" placeholder="Search" className=" bg-transparent border-none focus:ring-transparent text-[#474747] text-base font-[Inter] font-normal " ></input>
+        </div>
+        <img src={userTop}></img>
       </div>
       <div className="flex p-6 gap-6 flex-grow ">
         <Posts />
@@ -123,11 +140,11 @@ export const Dashboard = () => {
         </div>
       </div>
       <div
-        className={`bg-red-400 fixed right-0 top-0 h-[100vh] w-[500px] origin-left transition duration-700 z-50 ${
+        className={`bg-[#ffffff] fixed right-0 top-0 h-[100vh] w-[500px] origin-left transition duration-700 z-50 ${
           drawerOpen ? "-translate-x-[0%]" : "translate-x-[100%] "
         } `}
       >
-        drawer
+        <ChatroomDrawer />
       </div>
       {drawerOpen && (
         <div

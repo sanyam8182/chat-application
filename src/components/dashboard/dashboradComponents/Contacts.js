@@ -42,11 +42,11 @@ export const Contacts = () => {
               className="bg-white hover:bg-[#EBF5FF] min-h-[89px] border-solid border-b-2 flex p-4 gap-2 cursor-pointer"
               onClick={() => handleChatroom(chatRoom)}
             >
-              <div className="h-[32px] min-w-[32px]">
+              <div className="h-[32px] min-w-[32px] ">
                 <img
-                  src="dp-placeholder.png"
+                  src="dp-placeholder.jpeg"
                   alt="profile-pic"
-                  className="h-[32px] w-[32px]"
+                  className="h-[32px] w-[32px] rounded-[16px] "
                 />
               </div>
               <div>

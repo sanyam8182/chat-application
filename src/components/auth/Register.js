@@ -57,7 +57,7 @@ const Register = () => {
                   First Name
                 </label>
                 <input
-                  className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                  className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                   type="text"
                   placeholder="First Name"
                   value={firstName}
@@ -69,7 +69,7 @@ const Register = () => {
                   First Name
                 </label>
                 <input
-                  className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                  className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                   type="text"
                   placeholder="Last Name"
                   value={lastName}
@@ -82,7 +82,7 @@ const Register = () => {
                 Username
               </label>
               <input
-                className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -94,7 +94,7 @@ const Register = () => {
                 Email Address
               </label>
               <input
-                className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                 type="text"
                 placeholder="Email address"
                 value={email}
@@ -107,7 +107,7 @@ const Register = () => {
                   Set Password
                 </label>
                 <input
-                  className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                  className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                   type="password"
                   placeholder="Password"
                   value={password}
@@ -119,7 +119,7 @@ const Register = () => {
                   Confirm Password
                 </label>
                 <input
-                  className="  mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+                  className="  mt-2 border-none focus:ring-transparent bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
                   type="password"
                   placeholder="Password"
                   value={confirmPassword}

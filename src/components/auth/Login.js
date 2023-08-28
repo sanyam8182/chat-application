@@ -77,7 +77,7 @@ const Login = () => {
               Username
             </label>
             <input
-              className=" mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[35px] font-[Inter] text-base font-normal "
+              className=" mt-2 bg-[#f5f5f5] h-12 rounded-md pl-[35px] font-[Inter] text-base font-normal border-none focus:ring-transparent "
               type="text"
               placeholder="Username"
               value={username}
@@ -94,7 +94,7 @@ const Login = () => {
               Password
             </label>
             <input
-              className=" mt-2 border-none bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal "
+              className=" mt-2 bg-[#f5f5f5] h-12 rounded-md pl-[10px] font-[Inter] text-base font-normal border-none focus:ring-transparent "
               type="Password"
               placeholder="Password"
               value={password}

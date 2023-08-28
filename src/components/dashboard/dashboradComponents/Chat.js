@@ -82,11 +82,11 @@ export const Chat = () => {
               key={index}
               className=" min-h-[89px] bg-white border-solid border-b-2 flex p-4 gap-2 rounded-md shadow-4px "
             >
-              <div className="h-[32px] min-w-[32px]">
+              <div className="h-[32px] min-w-[32px] ">
                 <img
-                  src="dp-placeholder.png"
+                  src="dp-placeholder.jpeg"
                   alt="profile-pic"
-                  className="h-[32px] w-[32px]"
+                  className="h-[32px] w-[32px] rounded-[16px]"
                 />
               </div>
               <div>
@@ -100,7 +100,7 @@ export const Chat = () => {
       <div className=" h-[100px] w-[95%] flex flex-row items-center bg-[#ffffff] rounded-md px-6 gap-4 mt-auto shadow-4pxt ">
         <textarea
           placeholder="Type Something ..."
-          className=" h-[52px] bg-[#f5f5f5] min-w-[75%] font-[Inter] text-sm font-normal px-4 py-4 "
+          className=" h-[52px] bg-[#f5f5f5] min-w-[75%] font-[Inter] text-sm font-normal px-4 py-4 border-none focus:ring-transparent rounded-md "
           onChange={(e) =>
             setNewMessage({
               name: `${user.firstname} ${user.lastname}`,

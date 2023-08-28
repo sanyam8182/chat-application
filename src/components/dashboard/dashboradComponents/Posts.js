@@ -12,9 +12,9 @@ export const Posts = () => {
       <div className=" flex shadow-md p-4 ">
         <div className="h-[64px] min-w-[64px]">
           <img
-            src="dp-placeholder.png"
+            src="dp-placeholder.jpeg"
             alt="profile-pic"
-            className="h-[64px] w-[64px]"
+            className="h-[64px] w-[64px] rounded-[32px]"
           />
         </div>
         <div className=" pr-4 rb-4 pl-3 ">
@@ -54,9 +54,9 @@ export const Posts = () => {
             <div className=" flex shadow-md p-4 ">
               <div className="h-[32px] min-w-[32px]">
                 <img
-                  src="dp-placeholder.png"
+                  src="dp-placeholder.jpeg"
                   alt="profile-pic"
-                  className="h-[32px] w-[32px]"
+                  className="h-[32px] w-[32px] rounded-[16px]"
                 />
               </div>
               <div className=" pr-4 rb-4 pl-3 ">
@@ -99,9 +99,9 @@ export const Posts = () => {
             <div className=" flex shadow-md p-4 ">
               <div className="h-[32px] min-w-[32px]">
                 <img
-                  src="dp-placeholder.png"
+                  src="dp-placeholder.jpeg"
                   alt="profile-pic"
-                  className="h-[32px] w-[32px]"
+                  className="h-[32px] w-[32px] rounded-[16px]"
                 />
               </div>
               <div className=" pr-4 rb-4 pl-3 ">

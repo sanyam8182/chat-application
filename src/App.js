@@ -4,7 +4,6 @@ import { Routes } from "react-router-dom";
 import Register from "./components/auth/Register.js";
 import Login from "./components/auth/Login.js";
 import { Dashboard } from "./components/dashboard/Dashboard.js";
-import ChatRoom from "./components/ChatRoom.js";
 
 const App = () => {
   return (
@@ -15,7 +14,6 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/chat/:roomId" element={<ChatRoom />} />
         </Routes>
       </Router>
     </div>

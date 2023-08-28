@@ -10,6 +10,7 @@ module.exports = {
     },
   },
   plugins: [
+    require("@tailwindcss/forms"),
     function ({ addUtilities }) {
       const newUtilities = {
         ".placeholder-center::placeholder": {
