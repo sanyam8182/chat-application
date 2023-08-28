@@ -22,8 +22,8 @@ const Register = () => {
       return;
     }
     try {
-      if (!username || !password || !email || !confirmPassword) {
-        setmessage("Please provide username, password and email");
+      if (!username || !password || !email || !confirmPassword || firstName || lastName) {
+        setmessage("Please provide all the data");
         setcheck(false);
         return;
       }
